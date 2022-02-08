@@ -48,7 +48,7 @@ from myExamples.my4dExample import my4dExample
 ########################################################################################################################
 
 ########################################################################
-# main function
+# training runner function
 ########################################################################
 
 def myTrainingRunnerFunc(dim, paramList, labelList, exampleFunc, signature, path2SignDir, \
@@ -96,7 +96,6 @@ def myTrainingRunnerFunc(dim, paramList, labelList, exampleFunc, signature, path
 		
 		exampleFunc(L, currRank, currDegrs, signature, subSignature, path2SubSignDir, path2FigDir,\
 				path2ModDir, path2PerfDataDir)
-
 
 ########################################################################
 # main function
@@ -183,10 +182,6 @@ def main():
 			logging.info('### start training session corresponding to the signature # ' + signature + ' #')
 			logging.info('###############################################################################')
 
-			costFuncValList = []
-			apprErrList = []
-			cgPerformanceList = []
-
 			################################################################################################################
 			# ### 1d example ###
 			################################################################################################################
@@ -244,12 +239,11 @@ def main():
 				# for different scenarios which then will be simulated ...
 				paramList = []
 				labelList = []
-				# paramList.append((13, 27, 27, 1000))
 				
 				dim = 3
 				rankList = [6, 8]
 				degrList = [20, 30]
-				numDataPtsFactorList = [5, 10]
+				numDataPtsFactorList = [5]
 				
 				for k in range(0, len(numDataPtsFactorList)):
 					for i in range(0, len(rankList)):
@@ -275,7 +269,7 @@ def main():
 					for i in range(0, numProcs - 1):
 						prcsList.append(mp.Process(target = myTrainingRunnerFunc, args = (dim, paramList[i * N : (i + 1) * N], labelList[i * N : (i + 1) * N],\
 							my3dExample, signature, path2SignDir, figuresDirName, modelDirName, perfDataDirName)))
-					prcsList.append(mp.Process(target = myTrainingRunnerFunc, args = (dim, paramList[(numProcs - 1) * N : -1], labelList[(numProcs - 1) * N : ], \
+					prcsList.append(mp.Process(target = myTrainingRunnerFunc, args = (dim, paramList[(numProcs - 1) * N : ], labelList[(numProcs - 1) * N : ], \
 						my3dExample, signature, path2SignDir, figuresDirName, modelDirName, perfDataDirName)))
 									
 					# run processes
@@ -337,7 +331,7 @@ def main():
 					for i in range(0, numProcs - 1):
 						prcsList.append(mp.Process(target = myTrainingRunnerFunc, args = (dim, paramList[i * N : (i + 1) * N], labelList[i * N : (i + 1) * N],\
 							my4dExample, signature, path2SignDir, figuresDirName, modelDirName, perfDataDirName)))
-					prcsList.append(mp.Process(target = myTrainingRunnerFunc, args = (dim, paramList[(numProcs - 1) * N : -1], labelList[(numProcs - 1) * N : ], \
+					prcsList.append(mp.Process(target = myTrainingRunnerFunc, args = (dim, paramList[(numProcs - 1) * N : ], labelList[(numProcs - 1) * N : ], \
 						my4dExample, signature, path2SignDir, figuresDirName, modelDirName, perfDataDirName)))						
 			
 					# run processes
@@ -387,20 +381,19 @@ if __name__ == '__main__':
 	################################################################################################################		
 	
 	# analyse slected training data
-	# myTrainingDataAnalyser(dim, path2SignDir)
+		# myTrainingDataAnalyser(dim, path2SignDir)
 	
 	################################################################################################################		
 	
+	# create comparative surface plots, compute the experimental order of convergence, and analyse the cpu times
 
+		# path2ModDir = path2SignDir + '/model'
+		# path2FigDir = path2SignDir + '/figures'
+		
+		# createComparativePerfPlot(dim, path2SignDir, ['2d_4_0', '2d_4_1', '2d_4_3', '2d_4_76', '2d_4_119'])
+		# createComparativeSurfPlot(dim, path2SignDir, ['2d_11_17', '2d_11_59'], ['modelData22', 'modelData16'])
+		# createComparativeSurfPlot(dim, path2SignDir, ['2d_1_55', '2d_1_0'], ['modelData3', 'modelData3'])
 
-	# path2ModDir = path2SignDir + '/model'
-	# path2FigDir = path2SignDir + '/figures'
-	
-	# createComparativePerfPlot(dim, path2SignDir, ['2d_4_0', '2d_4_1', '2d_4_3', '2d_4_76', '2d_4_119'])
-	
-	# createComparativeSurfPlot(dim, path2SignDir, ['2d_11_17', '2d_11_59'], ['modelData22', 'modelData16'])
-	# createComparativeSurfPlot(dim, path2SignDir, ['2d_1_55', '2d_1_0'], ['modelData3', 'modelData3'])
+		# computeEOC(path2ModDir, 'modelData', path2FigDir, storeFig = True)
 
-	# computeEOC(path2ModDir, 'modelData', path2FigDir, storeFig = True)
-
-	# analyseCPUTimes(dim, path2SignDir)
+		# analyseCPUTimes(dim, path2SignDir)
