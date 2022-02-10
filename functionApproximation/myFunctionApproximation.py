@@ -12,26 +12,12 @@
 
 import numpy as np
 
-import random
-
 import logging
-
-import platform
-import datetime
-
-import time
 
 import sys
 import os
 
 import multiprocessing as mp
-
-import matplotlib
-from matplotlib import pyplot as plt
-import matplotlib.image as mpimg
-
-from mpl_toolkits.mplot3d import Axes3D
-from matplotlib import cm
 
 from misc.myDataAnalysingFunctions import myTrainingDataAnalyser
 from misc.myDataAnalysingFunctions import analyseCPUTimes
@@ -40,7 +26,6 @@ from misc.myVisualisingFunctions import createComparativePerfPlot
 from misc.myVisualisingFunctions import createComparativeSurfPlot
 from misc.myLoggingFunctions import computeEOC
 
-from cpd.myCPDAnsatzFunctions import MyCPDRadialAnsatzFunc
 from myExamples.my2dExample import my2dExample
 from myExamples.my3dExample import my3dExample
 from myExamples.my4dExample import my4dExample

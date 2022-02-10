@@ -38,7 +38,6 @@ def myTrainingDataAnalyser(dim, path2SignDir):
 			> only the last values in the performance files will be used!!!
 	"""
 	
-	
 	setupFileName = 'setup.txt'
 	perfDataDirName = 'perfData'
 	perfDataFileName = 'performance.txt'
